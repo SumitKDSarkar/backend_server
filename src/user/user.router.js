@@ -11,15 +11,35 @@ const hash=await argon2.hash(password)
 try{
     const user=new UserModel({username,email,password:hash})
     await user.save()
-    return res.status(201).send("user created")
+    return res.status(201).send("User Successfully Created")
 
 }
 catch(e){
+
     console.log(e.message)
     return res.send(e.message)
 }
 
 })
+
+// app.post("/signup", async (req, res) => {
+//     let {username,email,password} = await req.body;
+  
+//     try {
+//       let user = await UserModel.findOne({ email });
+  
+//       if (user) {
+//         res.status(401).send("Email is already exists");
+//       } else {
+//             await UserModel.create(req.body);
+//         // let token = `${newUser.email}:${newUser.id}:${Math.random() * 10000}`;
+  
+//         res.send({username});
+//       }
+//     } catch (e) {
+//       res.status(500).send(e.message);
+//     }
+//   });
 
 
 app.post("/login",async(req,res)=>{
@@ -75,15 +95,7 @@ console.log(req.params.id,req.body.creds)
 })
 
 
-
-
-
-
-
-
-
-
-//delete
+//Delete function
 app.delete("/:id",async(req,res)=>{
     let token=req.headers["authorization"]
 
@@ -109,7 +121,7 @@ else{
 })
 
 
-//Get
+//Get function
 app.get("/:id",async(req,res)=>{
 const token=req.headers["authorization"]
 if(token){
